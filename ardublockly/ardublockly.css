@@ -674,7 +674,7 @@ ul.side-nav li.logo img {
 }
 
 .sketch_name {
-  width: auto !important;
+  width: auto;
   max-width: 400px;
   line-height: 64px;
   height: 3rem !important;
