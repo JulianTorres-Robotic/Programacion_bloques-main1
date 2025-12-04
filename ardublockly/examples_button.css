@@ -1,0 +1,90 @@
+/* Examples Button and Dropdown */
+#button_examples_wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+#button_examples {
+  position: absolute;
+  right: 180px;
+  top: 10px;
+  visibility: hidden;
+  opacity: 0;
+  -moz-transition: visibility 0.3s linear, opacity 0.3s linear;
+  -webkit-transition: visibility 0.3s linear, opacity 0.3s linear;
+  -o-transition: visibility 0.3s linear, opacity 0.3s linear;
+  transition: visibility 0.3s linear, opacity 0.3s linear;
+  border-radius: 50%;
+}
+
+#button_examples i {
+  color: var(--neo-accent) !important;
+}
+
+/* Show examples button on wrapper hover */
+#ide_buttons_wrapper:hover #button_examples {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Examples dropdown menu */
+.examples-dropdown {
+  position: absolute;
+  right: 0;
+  top: 50px;
+  background: var(--neo-bg);
+  border-radius: 12px;
+  box-shadow: -6px -6px 12px var(--neo-shadow-light),
+    6px 6px 12px var(--neo-shadow-dark);
+  padding: 8px 0;
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+#button_examples_wrapper:hover .examples-dropdown {
+  opacity: 1;
+  visibility: visible;
+}
+
+.example-item {
+  display: block;
+  padding: 12px 20px;
+  color: #2c3e50 !important;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.example-item:hover {
+  background: rgba(63, 81, 181, 0.1);
+  padding-left: 24px;
+}
+
+/* Mobile adjustments for examples button */
+@media only screen and (max-width: 600px) {
+  #button_examples {
+    position: static !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 48px !important;
+    height: 48px !important;
+    margin: 0 !important;
+  }
+
+  .examples-dropdown {
+    right: auto;
+    left: 0;
+    top: 56px;
+    min-width: 180px;
+  }
+}
+
+/* Desktop - show on hover */
+@media only screen and (min-width: 993px) {
+  #button_examples {
+    right: 240px;
+  }
+}
