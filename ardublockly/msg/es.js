@@ -93,5 +93,9 @@ Ardublockly.LOCALISED_TEXT = {
   catAudio: "Audio",
   catMotors: "Motores",
   catComms: "Comunicación",
-  catRoboticMinds: "RoboticMinds",
+  catRoboticMindsSensor: "RoboticMindsSensor",
+  catRoboticMindsMotor: "RoboticMindsMotor",
+  catRoboticMindsBluetooth: "RoboticMindsBluetooth",
+  catRoboticMindsDisplay: "RoboticMindsDisplay",
+  catRoboticMindsWifi: "RoboticMindsWifi",
 };

@@ -232,8 +232,23 @@ Ardublockly.TOOLBOX_XML =
     '    <block type="spi_transfer_return"></block>' +
     '  </category>' +
     '  <sep></sep>' +
-    '  <category id="catRoboticMinds" name="RoboticMinds">' +
+    '  <category id="catRoboticMindsSensor" name="RoboticMindsSensor">' +
     '    <block type="ultrasonic_read"></block>' +
+    '    <block type="color_sensor_read"></block>' +
+    '    <block type="sound_sensor_read"></block>' +
+    '  </category>' +
+    '<category id="catRoboticMindsMotor" name="RoboticMindsMotor">' +
+    '    <block type="motor_setup"></block>' +
+    '    <block type="motor_run">' +
+    '       <value name="SPEED">' +
+    '         <block type="math_number">' +
+    '           <field name="NUM">255</field>' +
+    '         </block>' +
+    '       </value>' +
+    '    </block>' +
+    '    <block type="motor_stop"></block>' +
+    '  </category>' +
+    '  <category id="catRoboticMindsBluetooth" name="RoboticMindsBluetooth">' +
     '    <block type="bluetooth_setup"></block>' +
     '    <block type="bluetooth_available"></block>' +
     '    <block type="bluetooth_read_string"></block>' +
@@ -244,8 +259,8 @@ Ardublockly.TOOLBOX_XML =
     '        </block>' +
     '      </value>' +
     '    </block>' +
-    '    <block type="color_sensor_read"></block>' +
-    '    <block type="sound_sensor_read"></block>' +
+    '  </category>' +
+    '  <category id="catRoboticMindsDisplay" name="RoboticMindsDisplay">' +
     '    <block type="display_8x8_setup"></block>' +
     '    <block type="display_8x8_draw">' +
     '       <value name="ROW">' +
@@ -259,6 +274,8 @@ Ardublockly.TOOLBOX_XML =
     '         </block>' +
     '       </value>' +
     '    </block>' +
+    '  </category>' +
+    '  <category id="catRoboticMindsWifi" name="RoboticMindsWifi">' +
     '    <block type="wifi_connect">' +
     '      <value name="SSID">' +
     '        <block type="text">' +
@@ -272,14 +289,5 @@ Ardublockly.TOOLBOX_XML =
     '      </value>' +
     '    </block>' +
     '    <block type="wifi_is_connected"></block>' +
-    '    <block type="motor_setup"></block>' +
-    '    <block type="motor_run">' +
-    '       <value name="SPEED">' +
-    '         <block type="math_number">' +
-    '           <field name="NUM">255</field>' +
-    '         </block>' +
-    '       </value>' +
-    '    </block>' +
-    '    <block type="motor_stop"></block>' +
     '  </category>' +
     '</xml>';

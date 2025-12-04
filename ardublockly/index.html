@@ -57,7 +57,16 @@
 
   <!-- RoboticMinds Modules -->
   <script src="../blockly/blocks/arduino/robotic_modules.js"></script>
+  <script src="../blockly/blocks/arduino/robotic_modules_Bluetooth.js"></script>
+  <script src="../blockly/blocks/arduino/robotic_modules_Display.js"></script>
+  <script src="../blockly/blocks/arduino/robotic_modules_Motor.js"></script>
+  <script src="../blockly/blocks/arduino/robotic_modules_WiFi.js"></script>
+
   <script src="../blockly/generators/arduino/robotic_modules.js"></script>
+  <script src="../blockly/generators/arduino/robotic_modules_Bluetooth.js"></script>
+  <script src="../blockly/generators/arduino/robotic_modules_Display.js"></script>
+  <script src="../blockly/generators/arduino/robotic_modules_Motor.js"></script>
+  <script src="../blockly/generators/arduino/robotic_modules_WiFi.js"></script>
 
   <!-- Board Support (Uncommented to enable ESP32) -->
   <script src="../blockly/generators/arduino/boards.js"></script>
@@ -66,7 +75,6 @@
   <script src="../blockly/msg/js/en.js"></script>
   <script src="msg/en.js"></script>
 </head>
-
 <body>
   <!-- Horizontal Navigation bar -->
   <nav class="nav-fixed arduino_teal">
@@ -74,11 +82,14 @@
       <a class="show-on-large button-collapse" href="#" data-activates="slide-out" id="button-collapse"><i
           class="mdi-navigation-menu"></i></a>
       <a id="logo-container" class="brand-logo">
-        <img src="img/logo.png" alt="RobotMinds" style="height:28px;vertical-align:middle;margin-right:8px">
-        <span class="app_title translatable_title">ROBOTMINDS LAB:</span>
+        <img src="img/logo.png" alt="RobotMinds" style="height:50px;vertical-align:middle;margin-right:8px">
+        <div>|</div>
+        <img src="https://m4rkrobot.com/wp-content/uploads/2023/08/logo_m4rk_header_4-1.png" alt="RoboM4rk" style="height:50px;vertical-align:middle;margin-right:8px">
+        
+        <!-- <span class="app_title translatable_title">ROBOTMINDS LAB:</span>-->
         <!-- Sketch name editable text field -->
         <span class="sketch_name_wrapper">
-          <i class="mdi-image-edit sketch_name_icon"></i>
+          <i class="mdi-image-edit mdi-action-help left sketch_name_icon"></i>
           <input id="sketch_name" class="sketch_name" type="text">
         </span>
       </a>
@@ -108,11 +119,11 @@
         <li id="menu_settings"><a href="#"><span class="translatable_settings">Settings</span><i
               class="mdi-action-settings left"></i></a></li>
         <li id="menu_bug"><a href="https://github.com/carlosperate/ardublockly/wiki" target="_blank"><span
-              class="translatable_documentation">Documentation</span><i class="mdi-action-help left"></i></a></li>
+              class="translatable_documentation">Ardublockly</span><i class="mdi-action-help left"></i></a></li>
         <!-- Content   <li id="menu_bug"><a href="http://github.com/carlosperate/ardublockly/issues" target="_blank"><span class="translatable_reportBug">Report Bug</span><i class="mdi-action-bug-report left"></i></a></li> -->
       </ul>
     <li class="no-padding">
-      <ul class="collapsible collapsible-accordion">
+      <!-- <ul class="collapsible collapsible-accordion">
         <li>
           <div class="collapsible-header"><span class="translatable_examples">Examples</span><i
               class="mdi-navigation-arrow-drop-down"></i></div>
@@ -126,12 +137,9 @@
             </ul>
           </div>
         </li>
-      </ul>
+      </ul> -->
     </li>
-    <li class="no-padding side-menu-end">&nbsp;</li>
   </ul>
-
-  <!-- Content -->
   <div class="container">
     <div class="row">
       <div class="col s12 m12 l8" style="position:relative">
@@ -201,6 +209,47 @@
           <div id="blocks_panel" class="content blocks_panel_large">
             <div id="content_blocks" class="content z-depth-1"></div>
           </div>
+        </div>
+        <!-- Examples Button Wrapper -->
+        <div id="examples_buttons_wrapper" style="position: static; bottom: 100px; left: 20px; z-index: 1;"> 
+          <ul class="collapsible" data-collapsible="accordion" id="ide_examples_collapsible" style="border: none; box-shadow: none; margin: 25px;"> 
+            <li> 
+              <div class="collapsible-header waves-effect waves-light z-depth-1-half arduino_teal examples-btn" 
+                   style="display: inline-table; align-items: center; gap: 8px; padding: 0 12px; border-radius: 20px;" 
+                   id="button_ide_examples"> 
+                <span style="font-family: 'Roboto', sans-serif !important;">Ejemplos</span>
+              </div> 
+              <div class="collapsible-body" id="ide_examples_body" style="border: none; padding: 5px; margin-bottom: 35px; width: 200px; position: absolute; bottom: 60px; left: 15px; z-index: 1;"> 
+                <ul style="display: flex; flex-direction: column-reverse; gap: 10px; color: #3F51B5;"> 
+                  <li id="menu_example_1">
+                    <a href="#!" class="waves-effect waves-light blocklyTreeRow arduino_orange" style="color: black; width: 100%; height: auto; border-radius: 5px; text-align: center; padding: 0 10px; line-height: 40px; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                      Blink
+                    </a>
+                  </li> 
+                  <li id="menu_example_2">
+                    <a href="#!" class="waves-effect waves-light blocklyTreeRow arduino_orange" style="color: black; width: 100%; height: auto; border-radius: 5px; text-align: center; padding: 0 10px; line-height: 40px; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                      Serial print
+                    </a>
+                  </li> 
+                  <li id="menu_example_3">
+                    <a href="#!" class="waves-effect waves-light blocklyTreeRow arduino_orange" style="color: black; width: 100%; height: auto; border-radius: 5px; text-align: center; padding: 0 10px; line-height: 40px; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                      Serial repeat game
+                    </a>
+                  </li> 
+                  <li id="menu_example_4">
+                    <a href="#!" class="waves-effect waves-light blocklyTreeRow arduino_orange" style="color: black; width: 100%; height: auto; border-radius: 5px; text-align: center; padding: 0 10px; line-height: 40px; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                      Servo knob
+                    </a>
+                  </li> 
+                  <li id="menu_example_5">
+                    <a href="#!" class="waves-effect waves-light blocklyTreeRow arduino_orange" style="color: black; width: 100%; height: auto; border-radius: 5px; text-align: center; padding: 0 10px; line-height: 40px; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                      Stepper knob
+                    </a>
+                  </li> 
+                </ul> 
+              </div> 
+            </li> 
+          </ul> 
         </div>
       </div>
       <div class="col s12 m12 l4">
