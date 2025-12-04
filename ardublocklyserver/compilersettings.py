@@ -122,51 +122,37 @@ class ServerCompilerSettings(object):
 
     def set_compiler_dir_default(self):
         """
-        Intenta encontrar el ejecutable del Arduino IDE.
-
-        1) Primero usa la variable de entorno ARDUINO_IDE_PATH
-           (la que seteas en start.py con resource_path('arduino-1.8.19')).
-        2) Si no existe, intenta con la ruta base del proyecto/_MEIPASS.
+        Busca el IDE de Arduino DENTRO del paquete temporal (_MEIPASS).
         """
-        try:
-            candidates = []
+        self.__compiler_dir = None
+        
+        # 1. Definir la ruta base (¿Dónde están mis archivos?)
+        if hasattr(sys, '_MEIPASS'):
+            # ESTA ES LA CLAVE: Si es un exe, busca en la carpeta temporal interna
+            base_path = sys._MEIPASS
+            print(f"Modo EXE detectado. Buscando internamente en: {base_path}")
+        else:
+            # Modo código fuente normal
+            base_path = os.path.dirname(os.path.abspath(__file__))
+            base_path = os.path.abspath(os.path.join(base_path, '..', '..'))
 
-            # 1) Priorizar lo que definimos en start.py
-            ide_root_env = os.environ.get('ARDUINO_IDE_PATH')
-            if ide_root_env:
-                ide_root = Path(ide_root_env)
-                candidates.append(ide_root / 'arduino_debug.exe')
-                candidates.append(ide_root / 'arduino.exe')
+        # 2. Lista de posibles ejecutables de Arduino
+        # IMPORTANTE: La carpeta 'arduino-1.8.19' debe coincidir con como la llames en el .spec
+        posibles_rutas = [
+            os.path.join(base_path, 'arduino-1.8.19', 'arduino_debug.exe'),
+            os.path.join(base_path, 'arduino-1.8.19', 'arduino.exe'),
+            os.path.join(base_path, 'arduino', 'arduino_debug.exe'),
+        ]
 
-            # 2) Fallback: buscar relativo al propio código / _MEIPASS
-            if getattr(sys, 'frozen', False):
-                if hasattr(sys, '_MEIPASS'):
-                    base_path = Path(sys._MEIPASS)
-                else:
-                    base_path = Path(sys.executable).parent
-            else:
-                base_path = Path(__file__).resolve().parent.parent
+        # 3. Buscar
+        for ruta in posibles_rutas:
+            if os.path.isfile(ruta):
+                self.__compiler_dir = ruta
+                print(f"✔ Arduino IDE interno encontrado en: {self.__compiler_dir}")
+                return
 
-            candidates.append(base_path / 'arduino-1.8.19' / 'arduino_debug.exe')
-            candidates.append(base_path / 'arduino-1.8.19' / 'arduino.exe')
-
-            # Buscar el primero que exista
-            self.__compiler_dir = None
-            for p in candidates:
-                if p.is_file():
-                    self.__compiler_dir = str(p)
-                    break
-
-            if self.__compiler_dir:
-                print('✔ Arduino IDE encontrado en:\n\t%s' % self.__compiler_dir)
-            else:
-                print('❌ No se encontró el ejecutable de Arduino IDE.')
-                print('   Revisar carpeta "arduino-1.8.19" en el mismo nivel que start.py/start.exe.')
-
-        except Exception as e:
-            self.__compiler_dir = None
-            print('❌ Error en set_compiler_dir_default:', e)
-
+        print(" No se encontró Arduino dentro del paquete.")
+        print(f"   Rutas revisadas: {posibles_rutas}")
         sys.stdout.flush()
 
     def set_compiler_dir_from_file(self, new_compiler_dir):
@@ -267,8 +253,16 @@ class ServerCompilerSettings(object):
     arduino_board = property(get_arduino_board, set_arduino_board)
 
     def set_arduino_board_default(self):
-        self.__arduino_board_key = sorted(self.__arduino_types.keys())[0]
-        self.__arduino_board_value = self.__arduino_types[self.__arduino_board_key]
+        #self.__arduino_board_key = sorted(self.__arduino_types.keys())[0]
+        #self.__arduino_board_value = self.__arduino_types[self.__arduino_board_key]
+        self.__arduino_board_key = 'Uno'
+        if 'Uno' in self.__arduino_types:
+            self.__arduino_board_value = self.__arduino_types['Uno']
+        else:
+            # Fallback por si acaso borraste 'Uno' de la lista
+            first = sorted(self.__arduino_types.keys())[0]
+            self.__arduino_board_key = first
+            self.__arduino_board_value = self.__arduino_types[first]
 
     def set_arduino_board_from_file(self, new_board):
         if new_board in self.__arduino_types:

@@ -124,6 +124,10 @@ def load_arduino_cli(sketch_path):
                 cli_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=False)
             std_out, err_out = process.communicate()
+            if std_out:
+                std_out = std_out.decode('utf-8', 'ignore')
+            if std_err:
+                std_err = std_err.decode('utf-8', 'ignore')
             std_out = six.u(std_out)
             err_out = six.u(err_out)
             exit_code = process.returncode
